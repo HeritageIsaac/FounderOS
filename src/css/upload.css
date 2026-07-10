@@ -1,0 +1,44 @@
+.upload-box{
+
+    margin-top:30px;
+
+    background:#18181c;
+
+    padding:30px;
+
+    border-radius:18px;
+
+    border:1px dashed #444;
+}
+
+.upload-box h2{
+
+    margin-bottom:15px;
+}
+
+.upload-box p{
+
+    color:#999;
+
+    margin-bottom:20px;
+}
+
+.upload-box input{
+
+    margin-bottom:20px;
+
+    color:white;
+}
+
+.upload-box button{
+
+    padding:12px 22px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#ff4b4b;
+
+    color:white;
+}

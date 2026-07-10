@@ -1,0 +1,175 @@
+.loader-overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.65);
+
+    backdrop-filter:blur(8px);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:99999;
+
+}
+
+.loader-card{
+
+    width:550px;
+
+    background:white;
+
+    border-radius:22px;
+
+    padding:35px;
+
+    box-shadow:0 25px 60px rgba(0,0,0,.25);
+
+}
+
+.brain{
+
+    font-size:70px;
+
+    text-align:center;
+
+    animation:pulse 1.2s infinite;
+
+}
+
+.loader-card h2{
+
+    text-align:center;
+
+    margin-top:15px;
+
+}
+
+.loader-card p{
+
+    text-align:center;
+
+    color:#666;
+
+    margin-bottom:30px;
+
+}
+
+.executive-loader{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:15px;
+
+}
+
+.executive-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:15px;
+
+    background:#f8fafc;
+
+    border-radius:12px;
+
+}
+
+.left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.avatar{
+
+    font-size:30px;
+
+}
+
+.left strong{
+
+    display:block;
+
+}
+
+.left small{
+
+    color:#666;
+
+}
+
+.done{
+
+    color:#16a34a;
+
+    font-size:24px;
+
+}
+
+.working{
+
+    font-size:24px;
+
+    animation:pulse 1s infinite;
+
+}
+
+.waiting{
+
+    color:#bbb;
+
+    font-size:24px;
+
+}
+
+.current-task{
+
+    margin-top:30px;
+
+    text-align:center;
+
+    font-size:18px;
+
+    font-weight:600;
+
+    color:#2563eb;
+
+}
+
+@keyframes pulse{
+
+    0%{
+
+        transform:scale(1);
+
+    }
+
+    50%{
+
+        transform:scale(1.15);
+
+    }
+
+    100%{
+
+        transform:scale(1);
+
+    }
+
+}

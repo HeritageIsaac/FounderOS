@@ -1,0 +1,39 @@
+.action-plan{
+
+    background:white;
+
+    margin-top:30px;
+
+    padding:25px;
+
+    border-radius:20px;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+
+}
+
+.task{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    padding:15px 0;
+
+    border-bottom:1px solid #eee;
+
+}
+
+.task:last-child{
+
+    border-bottom:none;
+
+}
+
+.task input{
+
+    transform:scale(1.3);
+
+}

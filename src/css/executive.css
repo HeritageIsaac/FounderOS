@@ -1,0 +1,38 @@
+.executive-card{
+
+    background:#18181c;
+
+    padding:25px;
+
+    border-radius:18px;
+
+    border:1px solid #252525;
+
+    transition:.3s;
+}
+
+.executive-card:hover{
+
+    transform:translateY(-6px);
+}
+
+.executive-card h3{
+
+    margin-bottom:10px;
+}
+
+.executive-card small{
+
+    color:#ff4b4b;
+
+    display:block;
+
+    margin-bottom:20px;
+}
+
+.executive-card p{
+
+    color:#bfbfbf;
+
+    line-height:1.7;
+}

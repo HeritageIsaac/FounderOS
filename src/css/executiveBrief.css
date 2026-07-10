@@ -1,0 +1,51 @@
+.executive-brief{
+
+    background:linear-gradient(135deg,#2563eb,#4f46e5);
+
+    color:white;
+
+    padding:30px;
+
+    border-radius:20px;
+
+    margin-bottom:30px;
+
+}
+
+.executive-brief h2{
+
+    margin-bottom:15px;
+
+}
+
+.executive-brief p{
+
+    line-height:1.7;
+
+}
+
+.brief-grid{
+
+    display:flex;
+
+    gap:40px;
+
+    margin:25px 0;
+
+}
+
+.brief-grid h3{
+
+    font-size:15px;
+
+    opacity:.85;
+
+}
+
+.brief-grid p{
+
+    font-size:26px;
+
+    font-weight:bold;
+
+}
