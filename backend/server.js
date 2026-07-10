@@ -1,32 +1,22 @@
-const express = require("express");
-const cors = require("cors");
-const fileUpload = require("express-fileupload");
-require("dotenv").config();
-
-const analysisRoute = require("./routes/analysisRoute");
-const chatRoute = require("./routes/chatRoute");
-const app = express();
-
-app.use(cors({
-    origin: [
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      const allowedOrigins = [
         "http://localhost:5173",
-        "https://founderos-iota-beige.vercel.app"
-    ],
-    methods: ["GET", "POST"]
-})); app.use(express.json());
-app.use(fileUpload());
+        "https://founderos-iota-beige.vercel.app",
+        "https://founderos-7l7zyrqfl-isaac-heritages-projects.vercel.app"
+      ];
 
-app.get("/", (req, res) => {
-    res.json({
-        message: "FounderOS API Running 🚀"
-    });
-});
+      // Allow requests with no origin (e.g. Postman)
+      if (!origin) return callback(null, true);
 
-app.use("/api", analysisRoute);
-app.use("/api", chatRoute);
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
 
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-    console.log(`🚀 Server running on port ${PORT}`);
-});
+      return callback(new Error("Not allowed by CORS"));
+    },
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+  })
+);
