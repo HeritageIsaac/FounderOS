@@ -1,4 +1,4 @@
-import "../css/executive.css";
+import "../css/executiveCard.css";
 
 export default function ExecutiveCard({
     name,
