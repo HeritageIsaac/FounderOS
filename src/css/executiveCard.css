@@ -1,23 +1,3 @@
-/* ===========================
-   Executive Board Grid
-=========================== */
-
-.executives{
-
-    display:grid;
-
-    grid-template-columns:repeat(2,1fr);
-
-    gap:25px;
-
-    margin-top:30px;
-
-}
-
-/* ===========================
-   Executive Card
-=========================== */
-
 .executive-card{
 
     position:relative;
@@ -32,13 +12,11 @@
 
     overflow:hidden;
 
-    transition:all .35s ease;
+    transition:.35s;
 
     box-shadow:0 15px 40px rgba(0,0,0,.25);
 
 }
-
-/* Top Gradient */
 
 .executive-card::before{
 
@@ -62,21 +40,15 @@
 
 }
 
-/* Hover */
-
 .executive-card:hover{
 
     transform:translateY(-8px);
 
+    box-shadow:0 25px 50px rgba(255,75,75,.2);
+
     border-color:#ff4b4b;
 
-    box-shadow:0 20px 45px rgba(255,75,75,.18);
-
 }
-
-/* ===========================
-   Header
-=========================== */
 
 .executive-header{
 
@@ -89,8 +61,6 @@
     margin-bottom:20px;
 
 }
-
-/* Avatar */
 
 .avatar{
 
@@ -114,59 +84,39 @@
         #ff8b3d
     );
 
-    box-shadow:0 0 20px rgba(255,75,75,.3);
+    box-shadow:0 0 18px rgba(255,75,75,.35);
 
 }
-
-/* Name */
 
 .executive-card h3{
 
-    margin:0;
+    color:#fff;
 
-    color:white;
+    margin:0;
 
     font-size:1.3rem;
 
-    font-weight:700;
-
 }
 
-/* Role */
-
 .executive-card small{
-
-    display:inline-block;
-
-    margin-top:6px;
 
     color:#ff7d7d;
 
     font-size:.9rem;
 
-    font-weight:500;
-
 }
-
-/* ===========================
-   Advice
-=========================== */
 
 .executive-card p{
 
-    margin:22px 0;
+    margin:20px 0;
 
-    color:#d5d5d5;
+    color:#d7d7d7;
 
     line-height:1.8;
 
     font-size:.96rem;
 
 }
-
-/* ===========================
-   Footer
-=========================== */
 
 .executive-footer{
 
@@ -180,8 +130,6 @@
 
 }
 
-/* Status */
-
 .status{
 
     display:flex;
@@ -190,7 +138,7 @@
 
     gap:8px;
 
-    color:#c9c9c9;
+    color:#bdbdbd;
 
     font-size:.9rem;
 
@@ -212,27 +160,21 @@
 
 }
 
-/* AI Badge */
-
 .badge{
-
-    background:rgba(255,75,75,.12);
-
-    color:#ff7d7d;
 
     padding:6px 14px;
 
     border-radius:30px;
+
+    background:rgba(255,75,75,.15);
+
+    color:#ff7070;
 
     font-size:.8rem;
 
     font-weight:600;
 
 }
-
-/* ===========================
-   Animation
-=========================== */
 
 @keyframes pulse{
 
@@ -246,9 +188,9 @@
 
     50%{
 
-        transform:scale(1.4);
+        transform:scale(1.3);
 
-        opacity:.5;
+        opacity:.6;
 
     }
 
@@ -257,20 +199,6 @@
         transform:scale(1);
 
         opacity:1;
-
-    }
-
-}
-
-/* ===========================
-   Mobile
-=========================== */
-
-@media(max-width:900px){
-
-    .executives{
-
-        grid-template-columns:1fr;
 
     }
 

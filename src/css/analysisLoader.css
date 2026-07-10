@@ -1,175 +1,91 @@
-.loader-overlay{
+.analysis-loader {
 
-    position:fixed;
+    position: fixed;
+    inset: 0;
 
-    inset:0;
+    background: rgba(8, 8, 12, 0.95);
 
-    background:rgba(0,0,0,.65);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-    backdrop-filter:blur(8px);
+    z-index: 9999;
 
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    z-index:99999;
+    color: white;
 
 }
 
-.loader-card{
+.loader-circle {
 
-    width:550px;
+    width: 90px;
+    height: 90px;
 
-    background:white;
+    border: 6px solid #2b2b35;
+    border-top: 6px solid #ff4b4b;
 
-    border-radius:22px;
+    border-radius: 50%;
 
-    padding:35px;
+    animation: spin 1s linear infinite;
 
-    box-shadow:0 25px 60px rgba(0,0,0,.25);
-
-}
-
-.brain{
-
-    font-size:70px;
-
-    text-align:center;
-
-    animation:pulse 1.2s infinite;
+    margin-bottom: 25px;
 
 }
 
-.loader-card h2{
+.analysis-loader h2 {
 
-    text-align:center;
-
-    margin-top:15px;
-
-}
-
-.loader-card p{
-
-    text-align:center;
-
-    color:#666;
-
-    margin-bottom:30px;
+    margin-bottom: 8px;
+    font-size: 2rem;
 
 }
 
-.executive-loader{
+.loader-subtitle {
 
-    display:flex;
-
-    flex-direction:column;
-
-    gap:15px;
+    color: #b3b3b3;
+    margin-bottom: 30px;
 
 }
 
-.executive-row{
+.steps {
 
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    padding:15px;
-
-    background:#f8fafc;
-
-    border-radius:12px;
+    width: 450px;
+    max-width: 90%;
 
 }
 
-.left{
+.steps p {
 
-    display:flex;
+    padding: 14px;
+    margin: 10px 0;
 
-    align-items:center;
+    background: #1c1c24;
 
-    gap:15px;
+    border-radius: 10px;
 
-}
+    opacity: .45;
 
-.avatar{
-
-    font-size:30px;
-
-}
-
-.left strong{
-
-    display:block;
+    transition: all .35s ease;
 
 }
 
-.left small{
+.steps p.active {
 
-    color:#666;
+    opacity: 1;
 
-}
+    background: #ff4b4b;
 
-.done{
-
-    color:#16a34a;
-
-    font-size:24px;
+    transform: translateX(8px);
 
 }
 
-.working{
+@keyframes spin {
 
-    font-size:24px;
-
-    animation:pulse 1s infinite;
-
-}
-
-.waiting{
-
-    color:#bbb;
-
-    font-size:24px;
-
-}
-
-.current-task{
-
-    margin-top:30px;
-
-    text-align:center;
-
-    font-size:18px;
-
-    font-weight:600;
-
-    color:#2563eb;
-
-}
-
-@keyframes pulse{
-
-    0%{
-
-        transform:scale(1);
-
+    from {
+        transform: rotate(0deg);
     }
 
-    50%{
-
-        transform:scale(1.15);
-
-    }
-
-    100%{
-
-        transform:scale(1);
-
+    to {
+        transform: rotate(360deg);
     }
 
 }

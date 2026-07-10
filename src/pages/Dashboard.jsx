@@ -32,14 +32,35 @@ export default function Dashboard() {
                 {/* Statistics */}
 
                 <div className="stats">
+
                     <StatCard
-                        title="Business Health"
+                        title="Revenue"
+                        value={
+                            analysis
+                                ? analysis.revenue
+                                : "--"
+                        }
+                        color="#22c55e"
+                    />
+
+                    <StatCard
+                        title="Profit"
+                        value={
+                            analysis
+                                ? analysis.profit
+                                : "--"
+                        }
+                        color="#3b82f6"
+                    />
+
+                    <StatCard
+                        title="Health Score"
                         value={
                             analysis
                                 ? `${analysis.healthScore}%`
                                 : "--"
                         }
-                        color="#22c55e"
+                        color="#f59e0b"
                     />
 
                     <StatCard
@@ -52,18 +73,7 @@ export default function Dashboard() {
                         color="#ef4444"
                     />
 
-                    <StatCard
-                        title="Growth Plan"
-                        value={
-                            analysis
-                                ? `${analysis.growthPlan.length} Tasks`
-                                : "--"
-                        }
-                        color="#3b82f6"
-                    />
-
                 </div>
-
                 {/* Charts */}
 
                 <div className="analytics">
@@ -76,7 +86,7 @@ export default function Dashboard() {
 
                 {/* Upload */}
 
-                <UploadBox setAnalysis={setAnalysis} setReport={setReport}/>
+                <UploadBox setAnalysis={setAnalysis} setReport={setReport} />
                 {/* Executive Board */}
 
                 <ExecutiveBoard analysis={analysis} />

@@ -7,8 +7,12 @@ const analysisRoute = require("./routes/analysisRoute");
 const chatRoute = require("./routes/chatRoute");
 const app = express();
 
-app.use(cors());
-app.use(express.json());
+app.use(cors({
+    origin: [
+        "http://localhost:5173"
+    ],
+    methods: ["GET", "POST"]
+})); app.use(express.json());
 app.use(fileUpload());
 
 app.get("/", (req, res) => {

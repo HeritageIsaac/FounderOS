@@ -1,17 +1,78 @@
-import "./../css/executive.css";
+import "../css/executiveCard.css";
 
 export default function ExecutiveCard({
-  name,
-  role,
-  advice,
+    name,
+    role,
+    advice
 }) {
-  return (
-    <div className="executive-card">
-      <h3>{name}</h3>
 
-      <small>{role}</small>
+    const getAvatar = () => {
 
-      <p>{advice}</p>
-    </div>
-  );
+        switch (name) {
+
+            case "Atlas":
+                return "👔";
+
+            case "Ledger":
+                return "💰";
+
+            case "Pulse":
+                return "📈";
+
+            case "Forge":
+                return "⚙️";
+
+            default:
+                return "🤖";
+
+        }
+
+    };
+
+    return (
+
+        <div className="executive-card">
+
+            <div className="executive-header">
+
+                <div className="avatar">
+
+                    {getAvatar()}
+
+                </div>
+
+                <div>
+
+                    <h3>{name}</h3>
+
+                    <small>{role}</small>
+
+                </div>
+
+            </div>
+
+            <p>{advice}</p>
+
+            <div className="executive-footer">
+
+                <div className="status">
+
+                    <span className="online"></span>
+
+                    Online
+
+                </div>
+
+                <div className="badge">
+
+                    AI Executive
+
+                </div>
+
+            </div>
+
+        </div>
+
+    );
+
 }
