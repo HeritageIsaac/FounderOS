@@ -46,7 +46,7 @@ export default function UploadBox({ setAnalysis, setReport }) {
             const [response] = await Promise.all([
 
                 axios.post(
-                    "http://localhost:5000/api/analyze",
+                    "https://founderos-adzr.onrender.com/api/analyze",
                     formData,
                     {
                         headers: {

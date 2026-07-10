@@ -25,7 +25,7 @@ export default function ExecutiveChat({ analysis, report }) {
             setLoading(true);
 
             const response = await axios.post(
-                "http://localhost:5000/api/chat",
+                "https://founderos-adzr.onrender.com/api/chat",
                 {
                     executive,
                     question,
