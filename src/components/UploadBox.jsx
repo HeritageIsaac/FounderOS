@@ -2,7 +2,9 @@ import { useState } from "react";
 import axios from "axios";
 import "../css/upload.css";
 import AnalysisLoader from "./AnalysisLoader";
-const API = import.meta.env.VITE_API_URL;
+
+const API =
+    import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 export default function UploadBox({ setAnalysis, setReport }) {
 
@@ -12,7 +14,7 @@ export default function UploadBox({ setAnalysis, setReport }) {
     const [step, setStep] = useState(0);
 
     const handleUpload = async () => {
-
+console.log("🚀 Upload button clicked");
         if (!file) {
             alert("Please choose a file.");
             return;
@@ -25,10 +27,10 @@ export default function UploadBox({ setAnalysis, setReport }) {
         setShowLoader(true);
         setStep(0);
 
-        // Animate Executive Board steps
+        // Executive Board loading animation
         const interval = setInterval(() => {
 
-            setStep((prev) => {
+            setStep(prev => {
 
                 if (prev >= 4) {
                     clearInterval(interval);
@@ -43,11 +45,10 @@ export default function UploadBox({ setAnalysis, setReport }) {
 
         try {
 
-            // Run API request and minimum loading time together
             const [response] = await Promise.all([
 
                 axios.post(
-                    "https://founderos-adzr.onrender.com/api/analyze",
+                    `${API}/analyze`,
                     formData,
                     {
                         headers: {
@@ -60,34 +61,36 @@ export default function UploadBox({ setAnalysis, setReport }) {
 
             ]);
 
-            console.log(response.data);
-
             clearInterval(interval);
 
             setStep(4);
+
+            console.log("========== BACKEND RESPONSE ==========");
+            console.log(response.data);
+
+            console.log("========== ANALYSIS ==========");
+            console.log(response.data.analysis);
+
+            console.log("========== ACTION PLAN ==========");
+            console.log(response.data.analysis.actionPlan);
 
             setAnalysis(response.data.analysis);
             setReport(response.data.report);
 
             setFile(null);
-
             setShowLoader(false);
 
-        }
-
-        catch (err) {
+        } catch (err) {
 
             clearInterval(interval);
 
-            console.error(err);
+            console.error("UPLOAD ERROR:", err);
 
             setShowLoader(false);
 
             alert("Upload Failed.");
 
-        }
-
-        finally {
+        } finally {
 
             setLoading(false);
 
@@ -96,15 +99,13 @@ export default function UploadBox({ setAnalysis, setReport }) {
     };
 
     return (
-
         <>
-
             <div className="upload-box">
 
                 <h2>Upload Business Report</h2>
 
                 <p>
-                    Upload a CSV or PDF report.
+                    Upload a CSV report.
                 </p>
 
                 <input
@@ -116,9 +117,7 @@ export default function UploadBox({ setAnalysis, setReport }) {
                     onClick={handleUpload}
                     disabled={loading}
                 >
-
                     {loading ? "Analyzing..." : "Analyze"}
-
                 </button>
 
             </div>
@@ -127,9 +126,7 @@ export default function UploadBox({ setAnalysis, setReport }) {
                 show={showLoader}
                 step={step}
             />
-
         </>
-
     );
 
 }

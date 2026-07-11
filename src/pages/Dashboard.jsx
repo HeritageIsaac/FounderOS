@@ -14,9 +14,10 @@ import ActionPlan from "../components/ActionPlan";
 import "../css/dashboard.css";
 
 export default function Dashboard() {
-
+    
     const [analysis, setAnalysis] = useState(null);
     const [report, setReport] = useState("");
+    console.log("Analysis:", analysis);
     return (
 
         <div className="dashboard">
@@ -92,16 +93,14 @@ export default function Dashboard() {
                 <ExecutiveBoard analysis={analysis} />
 
                 <ActionPlan analysis={analysis} />
-
                 <ExecutiveChat analysis={analysis} report={report} />
                 {/* AI Chat */}
-
 
 
             </main>
 
         </div>
 
-    );
+);
 
 }

@@ -1,15 +1,43 @@
 import { useState } from "react";
 import axios from "axios";
 import "../css/executiveChat.css";
+const API_URL =
+    import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
-export default function ExecutiveChat({ analysis, report }) {
+const executives = [
+    {
+        id: "CEO",
+        name: "Atlas",
+        role: "Chief Executive Officer",
+        icon: "👨‍💼"
+    },
+    {
+        id: "CFO",
+        name: "Ledger",
+        role: "Chief Financial Officer",
+        icon: "💰"
+    },
+    {
+        id: "CMO",
+        name: "Pulse",
+        role: "Chief Marketing Officer",
+        icon: "📈"
+    },
+    {
+        id: "COO",
+        name: "Forge",
+        role: "Chief Operations Officer",
+        icon: "⚙️"
+    }];
 
-    const [executive, setExecutive] = useState("CEO");
+export default function ExecutiveChat({ report }) {
+
+    const [executive, setExecutive] = useState(executives[0]);
     const [question, setQuestion] = useState("");
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    const askExecutive = async () => {
+    const sendMessage = async () => {
 
         if (!question.trim()) return;
 
@@ -20,130 +48,169 @@ export default function ExecutiveChat({ analysis, report }) {
 
         setMessages(prev => [...prev, userMessage]);
 
+        setLoading(true);
+
         try {
 
-            setLoading(true);
+            const res = await axios.post(`${API_URL}/chat`, {
+                executive: executive.id,
+                question,
+                report
+            });
 
-            const response = await axios.post(
-                "https://founderos-adzr.onrender.com/api/chat",
-                {
-                    executive,
-                    question,
-                    report,
-                    analysis
-                }
-            );
+            console.log("FULL RESPONSE:", res.data);
+            console.log("ANSWER:", res.data.answer);
 
             const aiMessage = {
-                sender: executive,
-                text: response.data.answer.answer
+                sender: "ai",
+                text: res.data.answer
             };
+
+            console.log("Adding AI message:", aiMessage);
 
             setMessages(prev => [...prev, aiMessage]);
 
-            setQuestion("");
-
         } catch (err) {
 
-            console.error(err);
+            console.log(err);
 
-            alert("Unable to contact Executive Board.");
-
-        } finally {
-
-            setLoading(false);
+            setMessages(prev => [
+                ...prev,
+                {
+                    sender: "ai",
+                    text: "Sorry, I couldn't respond."
+                }
+            ]);
 
         }
 
+        setQuestion("");
+        setLoading(false);
     };
 
-    return (
 
-        <div className="executive-chat">
 
-            <h2>💬 Ask the Executive Board</h2>
+return (
 
-            <select
-                value={executive}
-                onChange={(e)=>setExecutive(e.target.value)}
-            >
-                <option>CEO</option>
-                <option>CFO</option>
-                <option>CMO</option>
-                <option>COO</option>
-            </select>
+    <div className="executive-chat">
 
-            <div className="chat-window">
+        <h2>💬 Ask the Executive Board</h2>
 
-                {
-                    messages.length === 0 &&
-                    <p className="placeholder">
-                        Start a conversation with your AI executives.
+        <div className="executive-tabs">
+
+            {executives.map(exec => (
+
+                <button
+
+                    key={exec.id}
+
+                    className={
+                        executive.id === exec.id
+                            ? "active"
+                            : ""
+                    }
+
+                    onClick={() => setExecutive(exec)}
+                >
+
+                    <span>{exec.icon}</span>
+
+                    <div>
+
+                        <strong>{exec.name}</strong>
+
+                        <small>{exec.role}</small>
+
+                    </div>
+
+                </button>
+
+            ))}
+
+        </div>
+
+        <div className="chat-window">
+
+            {messages.length === 0 && (
+
+                <div className="welcome">
+
+                    <h3>
+
+                        {executive.icon} {executive.name}
+
+                    </h3>
+
+                    <p>
+
+                        Ask me anything about your business.
+
                     </p>
-                }
 
-                {
-                    messages.map((msg,index)=>(
+                </div>
 
-                        <div
-                            key={index}
-                            className={
-                                msg.sender==="user"
-                                ?
-                                "message user"
-                                :
-                                "message ai"
-                            }
-                        >
+            )}
 
-                            <strong>
+            {messages.map((msg, index) => (
 
-                                {
-                                    msg.sender==="user"
-                                    ?
-                                    "You"
-                                    :
-                                    msg.sender
-                                }
+                <div
 
-                            </strong>
+                    key={index}
 
-                            <p>{msg.text}</p>
+                    className={`message ${msg.sender}`}
 
-                        </div>
+                >
 
-                    ))
-                }
+                    {msg.text}
 
-            </div>
+                </div>
 
-            <textarea
+            ))}
 
-                placeholder="Ask your executive team..."
+            {loading && (
+
+                <div className="message ai typing">
+
+                    Thinking...
+
+                </div>
+
+            )}
+
+        </div>
+
+        <div className="chat-input">
+
+            <input
 
                 value={question}
 
-                onChange={(e)=>setQuestion(e.target.value)}
+                onChange={(e) => setQuestion(e.target.value)}
+
+                placeholder={`Ask ${executive.name}...`}
+
+                onKeyDown={(e) => {
+
+                    if (e.key === "Enter") {
+
+                        sendMessage();
+
+                    }
+
+                }}
 
             />
 
-            <button
-                onClick={askExecutive}
-                disabled={loading}
-            >
+            <button onClick={sendMessage}>
 
-                {
-                    loading
-                    ?
-                    "Thinking..."
-                    :
-                    `Ask ${executive}`
-                }
+                Send
 
             </button>
 
         </div>
 
-    );
+    </div>
+
+);
 
 }

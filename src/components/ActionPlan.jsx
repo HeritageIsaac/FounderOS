@@ -1,50 +1,73 @@
-import { useState } from "react";
 import "../css/actionPlan.css";
+
+const icons = {
+    CEO: "👨‍💼",
+    CFO: "💰",
+    CMO: "📈",
+    COO: "⚙️"
+};
 
 export default function ActionPlan({ analysis }) {
 
-    const [completed, setCompleted] = useState({});
-
-    if (!analysis) return null;
-
-    const toggle = (index) => {
-        setCompleted(prev => ({
-            ...prev,
-            [index]: !prev[index]
-        }));
-    };
+    if (!analysis || !analysis.actionPlan) return null;
 
     return (
-
         <div className="action-plan">
 
-            <h2>📅 30-Day Executive Action Plan</h2>
+            <div className="action-header">
 
-            {
+                <h2>📅 30-Day Executive Action Plan</h2>
 
-                analysis.growthPlan.map((task, index) => (
+                <p>
+                    AI-generated roadmap based on your uploaded business report.
+                </p>
 
-                    <label
+            </div>
+
+            <div className="timeline">
+
+                {analysis.actionPlan.map((task, index) => (
+
+                    <div
                         key={index}
-                        className="task"
+                        className={`action-card ${task.priority.toLowerCase()}`}
                     >
 
-                        <input
-                            type="checkbox"
-                            checked={completed[index] || false}
-                            onChange={() => toggle(index)}
-                        />
+                        <div className="action-top">
 
-                        <span>{task}</span>
+                            <span className="priority">
+                                {task.priority}
+                            </span>
 
-                    </label>
+                            <span className="week">
+                                {task.day}
+                            </span>
 
-                ))
+                        </div>
 
-            }
+                        <div className="executive">
+
+                            <span className="icon">
+                                {icons[task.executive]}
+                            </span>
+
+                            <span>
+                                {task.executive}
+                            </span>
+
+                        </div>
+
+                        <h3>{task.title}</h3>
+
+                        <p>{task.description}</p>
+
+                    </div>
+
+                ))}
+
+            </div>
 
         </div>
-
     );
 
 }

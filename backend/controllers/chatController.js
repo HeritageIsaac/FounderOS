@@ -1,47 +1,30 @@
-const { askExecutive } = require("../services/aiService");
+const aiService = require("../services/aiService");
+
+console.log("AI SERVICE EXPORTS:", aiService);
+
+const { askExecutive } = aiService; 
 
 exports.chat = async (req, res) => {
-
     try {
+        const { executive, question, report } = req.body;
 
-        const { executive, question } = req.body;
-
-        if (!executive || !question) {
-
-            return res.status(400).json({
-
-                success: false,
-
-                message: "Executive and question are required."
-
-            });
-
-        }
-
-        const answer = await askExecutive(executive, question);
+        const answer = await askExecutive(
+            executive,
+            question,
+            report
+        );
 
         res.json({
-
             success: true,
-
             answer
-
         });
 
-    }
-
-    catch (err) {
-
+    } catch (err) {
         console.log(err);
 
         res.status(500).json({
-
             success: false,
-
             message: err.message
-
         });
-
     }
-
 };

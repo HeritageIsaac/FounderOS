@@ -31,49 +31,47 @@ export default function ExecutiveBoard({ analysis }) {
     if (!analysis) return null;
 
     return (
+    <div className="executive-board">
 
-        <div className="executive-board">
+        <h2>🏛 AI Executive Board</h2>
 
-            <h2>🏛 AI Executive Board</h2>
+        <div className="board-grid">
 
-            <div className="executives">
+            {visible >= 1 && (
+                <ExecutiveCard
+                    name={analysis.ceo.name}
+                    role="Chief Executive Officer"
+                    advice={analysis.ceo.advice}
+                />
+            )}
 
-                {visible >= 1 && (
-                    <ExecutiveCard
-                        name={analysis.ceo.name}
-                        role="Chief Executive Officer"
-                        advice={analysis.ceo.advice}
-                    />
-                )}
+            {visible >= 2 && (
+                <ExecutiveCard
+                    name={analysis.cfo.name}
+                    role="Chief Financial Officer"
+                    advice={analysis.cfo.advice}
+                />
+            )}
 
-                {visible >= 2 && (
-                    <ExecutiveCard
-                        name={analysis.cfo.name}
-                        role="Chief Financial Officer"
-                        advice={analysis.cfo.advice}
-                    />
-                )}
+            {visible >= 3 && (
+                <ExecutiveCard
+                    name={analysis.cmo.name}
+                    role="Chief Marketing Officer"
+                    advice={analysis.cmo.advice}
+                />
+            )}
 
-                {visible >= 3 && (
-                    <ExecutiveCard
-                        name={analysis.cmo.name}
-                        role="Chief Marketing Officer"
-                        advice={analysis.cmo.advice}
-                    />
-                )}
-
-                {visible >= 4 && (
-                    <ExecutiveCard
-                        name={analysis.coo.name}
-                        role="Chief Operating Officer"
-                        advice={analysis.coo.advice}
-                    />
-                )}
-
-            </div>
+            {visible >= 4 && (
+                <ExecutiveCard
+                    name={analysis.coo.name}
+                    role="Chief Operating Officer"
+                    advice={analysis.coo.advice}
+                />
+            )}
 
         </div>
 
-    );
+    </div>
+);
 
 }

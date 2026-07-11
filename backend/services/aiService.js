@@ -1,118 +1,264 @@
+const Groq = require("groq-sdk");
+
+const groq = new Groq({
+    apiKey: process.env.GROQ_API_KEY,
+});
+
+// ===============================
+// Analyze Business Report
+// ===============================
 async function analyzeWithAI(report) {
 
-    console.log("========== REPORT RECEIVED ==========");
-    console.log(report);
+    const prompt = `
+You are the AI Executive Board of FounderOS.
 
-    let healthScore = 75;
+The board consists of:
 
-    const lowerReport = report.toLowerCase();
+• CEO Atlas
+• CFO Ledger
+• CMO Pulse
+• COO Forge
 
-    if (lowerReport.includes("profit")) {
-        healthScore += 10;
-    }
+Analyze the business report below.
 
-    if (lowerReport.includes("growth")) {
-        healthScore += 10;
-    }
+Return ONLY valid JSON.
 
-    if (lowerReport.includes("loss")) {
-        healthScore -= 35;
-    }
+{
+  "companyName":"",
+  "revenue":"",
+  "profit":"",
+  "healthScore":0,
+  "riskLevel":"",
 
-    healthScore = Math.max(0, Math.min(100, healthScore));
+  "ceo":{
+      "name":"Atlas",
+      "advice":""
+  },
 
-    // Company Name
-    let companyName = "Unknown Company";
+  "cfo":{
+      "name":"Ledger",
+      "advice":""
+  },
 
-    const companyMatch = report.match(/Company:\s*(.*)/i);
+  "cmo":{
+      "name":"Pulse",
+      "advice":""
+  },
 
-    if (companyMatch) {
-        companyName = companyMatch[1].trim();
-    }
+  "coo":{
+      "name":"Forge",
+      "advice":""
+  },
 
-    // Revenue
-    let revenue = "Unknown";
+  "growthPlan":[
+      "",
+      "",
+      "",
+      ""
+  ],
 
-    const revenueMatch = report.match(
-        /Total Revenue,[^,]+,[^,]+,[^,]+,([\d.]+)/i
-    );
-
-    if (revenueMatch) {
-        revenue = `$${(Number(revenueMatch[1]) / 1000000).toFixed(2)}M`;
-    }
-
-    // Profit
-    let profit = "Unknown";
-
-    const profitMatch = report.match(
-        /Net Profit,[^,]+,[^,]+,[^,]+,([\d.]+)/i
-    );
-
-    if (profitMatch) {
-        profit = `$${(Number(profitMatch[1]) / 1000).toFixed(0)}K`;
-    }
-
-    return {
-
-        companyName,
-
-        revenue,
-
-        profit,
-
-        healthScore,
-
-        riskLevel: healthScore >= 80 ? "Low" : "Medium",
-
-        ceo: {
-            name: "Atlas",
-            advice: `The business generated ${revenue} in revenue. Continue focusing on sustainable growth and customer retention.`
-        },
-
-        cfo: {
-            name: "Ledger",
-            advice: `Net profit reached ${profit}. Monitor expenses and maintain strong cash flow.`
-        },
-
-        cmo: {
-            name: "Pulse",
-            advice: "Marketing performance is improving. Increase investment in your best-performing regions."
-        },
-
-        coo: {
-            name: "Forge",
-            advice: "Automate repetitive operational tasks to improve efficiency."
-        },
-
-        growthPlan: [
-            "Expand into one new market",
-            "Reduce operational costs by 10%",
-            "Improve customer retention",
-            "Review KPIs every week"
-        ]
-    };
-
+  "actionPlan":[
+      {
+          "day":"Week 1",
+          "executive":"CEO",
+          "title":"",
+          "description":"",
+          "priority":"High"
+      },
+      {
+          "day":"Week 2",
+          "executive":"CFO",
+          "title":"",
+          "description":"",
+          "priority":"Medium"
+      },
+      {
+          "day":"Week 3",
+          "executive":"CMO",
+          "title":"",
+          "description":"",
+          "priority":"High"
+      },
+      {
+          "day":"Week 4",
+          "executive":"COO",
+          "title":"",
+          "description":"",
+          "priority":"Medium"
+      }
+  ]
 }
 
-async function askExecutive(executive, question) {
+The action plan should contain practical tasks the business can complete within the next 30 days.
 
-    const answers = {
+Business Report:
 
-        CEO: "As CEO, I recommend prioritizing sustainable growth, innovation, and long-term competitive advantage.",
+${report}
+`;
 
-        CFO: "As CFO, I recommend reducing operational costs, improving cash flow, and protecting profit margins.",
+    const completion = await groq.chat.completions.create({
+        model: "llama-3.3-70b-versatile",
 
-        CMO: "As CMO, I recommend increasing customer acquisition, strengthening your brand, and improving retention.",
+        temperature: 0.8,
 
-        COO: "As COO, I recommend improving operational efficiency, automating repetitive work, and optimizing internal processes."
+        response_format: {
+            type: "json_object"
+        },
 
-    };
+        messages: [
+            {
+                role: "user",
+                content: prompt
+            }
+        ]
+    });
 
-    return {
-        executive,
-        question,
-        answer: answers[executive] || "Executive not found."
-    };
+    return JSON.parse(
+        completion.choices[0].message.content
+    );
+}
+// ===============================
+// Executive Chat
+// ===============================
+async function askExecutive(executive, question, report = "") {
+
+    console.log("Executive:", executive);
+        console.log("Question:", question);
+
+    console.log("✅ askExecutive() called");
+    
+    let systemPrompt = "";
+
+    switch (executive) {
+
+        case "CEO":
+
+            systemPrompt = `
+You are Atlas, the Chief Executive Officer of FounderOS.
+
+Your responsibility is:
+- Company strategy
+- Long-term vision
+- Market positioning
+- Innovation
+- Leadership
+- Competitive advantage
+
+Never answer like a marketing manager.
+
+Avoid discussing ad campaigns unless they affect company strategy.
+
+Think like Satya Nadella and Jeff Bezos.
+
+Give detailed executive-level advice.
+`;
+            break;
+
+        case "CFO":
+            systemPrompt = `
+You are Ledger, the Chief Financial Officer.
+
+Your expertise includes:
+
+- Revenue optimization
+- Cash flow
+- Profitability
+- Budget allocation
+- Financial forecasting
+- Cost reduction
+- Investment decisions
+
+Never discuss branding or marketing unless it affects finances.
+
+Answer with numbers, financial logic and business reasoning.
+`;
+            break;
+
+        case "CMO":
+
+            systemPrompt = `
+You are Pulse, the Chief Marketing Officer.
+
+You ONLY answer from a marketing perspective.
+
+Your expertise includes:
+
+- Branding
+- Digital marketing
+- Customer acquisition
+- Customer retention
+- Advertising
+- Sales funnels
+- SEO
+- Social media
+- Product positioning
+
+Never answer like a CEO.
+
+Always suggest specific marketing strategies.
+`;
+
+            break;
+
+        case "COO":
+
+            systemPrompt = `
+You are Forge, the Chief Operating Officer.
+
+You specialize in:
+
+- Operations
+- Processes
+- Automation
+- Team productivity
+- Internal workflows
+- Scaling operations
+
+Never discuss branding or investment unless it directly affects operations.
+
+Think like an operations executive.
+`;
+
+            break;
+
+        default:
+
+            systemPrompt = `
+You are an experienced business executive.
+`;
+
+    }
+
+    const completion = await groq.chat.completions.create({
+
+        model: "llama-3.3-70b-versatile",
+
+        temperature: 0.5,
+
+        messages: [
+
+            {
+                role: "system",
+                content: systemPrompt
+            },
+
+            {
+                role: "system",
+                content: `Business Report:
+
+${report}`
+            },
+
+            {
+                role: "user",
+                content: question
+            }
+
+        ]
+
+    });
+
+    return completion.choices[0].message.content;
 
 }
 
