@@ -105,7 +105,7 @@ console.log("🚀 Upload button clicked");
                 <h2>Upload Business Report</h2>
 
                 <p>
-                    Upload a CSV report.
+                    Upload a CSV or PDF report.
                 </p>
 
                 <input
