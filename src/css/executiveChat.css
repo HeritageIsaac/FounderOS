@@ -345,3 +345,20 @@
 }
 
 }
+@media (max-width:768px){
+
+    .executive-tabs{
+        display:grid;
+        grid-template-columns:1fr;
+    }
+
+    .chat-input{
+        flex-direction:column;
+    }
+
+    .chat-input input,
+    .chat-input button{
+        width:100%;
+    }
+
+}

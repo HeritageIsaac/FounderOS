@@ -187,3 +187,12 @@
     background:#22c55e;
 
 }
+@media (max-width:768px){
+
+    .action-grid,
+    .board-grid,
+    .executives{
+        grid-template-columns:1fr;
+    }
+
+}

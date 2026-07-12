@@ -60,61 +60,46 @@
 
     margin-bottom:20px;
 }
-/* Tablet */
-@media (max-width: 992px) {
+/* ==============================
+   EMERGENCY MOBILE FIX
+============================== */
+
+@media (max-width: 768px){
 
     .dashboard{
-        flex-direction: column;
+        display:block;
     }
 
     .content{
-        margin-left: 0;
-        width: 100%;
-        padding: 20px;
+        margin-left:0 !important;
+        width:100% !important;
+        padding:15px;
     }
 
-    .stats{
-        grid-template-columns: repeat(2,1fr);
-    }
-
-    .analytics{
-        grid-template-columns: 1fr;
-    }
-}
-/* Mobile */
-@media (max-width: 768px){
-
-    .stats{
-        grid-template-columns:1fr;
-    }
-
-    .analytics{
-        grid-template-columns:1fr;
-    }
-
-    .executives{
-        grid-template-columns:1fr;
-    }
-
-    .board-grid{
-        grid-template-columns:1fr;
-    }
-
+    .stats,
+    .analytics,
+    .executives,
+    .board-grid,
     .action-grid{
-        grid-template-columns:1fr;
+        display:grid;
+        grid-template-columns:1fr !important;
+        gap:20px;
     }
 
-    .executive-tabs{
-        flex-direction:column;
-    }
-
-    .chat-input{
-        flex-direction:column;
-    }
-
-    .chat-input input,
-    .chat-input button{
+    .stat-card,
+    .chart-container,
+    .health-score,
+    .executive-card,
+    .action-card,
+    .upload-box,
+    .executive-chat{
         width:100%;
     }
 
-}   
+    img,
+    canvas,
+    svg{
+        max-width:100%;
+        height:auto;
+    }
+}
